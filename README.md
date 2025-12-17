@@ -8,6 +8,8 @@
 
 Analysis of Formula 1 telemetry data using **C programming**, focused on identifying driver behavior patterns through speed, throttle, and brake data.
 
+![Telemetry Sample](telemetry_sample.png)
+
 This project demonstrates:
 - Data extraction from F1 using Python (FastF1)
 - CSV parsing and processing in C
