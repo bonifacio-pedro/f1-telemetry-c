@@ -6,8 +6,12 @@
 #define SIZE_CSV 615
 #define CRESCENT_SPEED_MOMENTUM 20
 
-void readAndWriteDoubleArrays(double *speed, double *relDist, double *throttle, int *brake) {
-    FILE *file = fopen("telemetry_VER_brazil_2024.csv", "r");
+void readAndWriteDoubleArrays(double *speed, double *relDist, double *throttle, int *brake, int choose) {
+    FILE *file;
+    if (choose)
+        file = fopen("telemetry_VER_brazil_2024.csv", "r");
+    else
+        file = fopen("telemetry_HAM_brazil_2024.csv", "r");
     char line[MAX_LINE];
 
     if (file == NULL) {
@@ -70,12 +74,12 @@ const char* getStateName(double *speed, double *relDist, double *throttle,
                          int *brake, int idx) {
      if (*(brake+idx) == 1 ||
             (*(throttle+idx) < 20 && *(speed+idx) < 250))
-        return "VER ARE IN A CURVE";
+        return "IN A CURVE";
     else if (*(brake+idx) == 0 && *(throttle+idx) <= 95 && verifyCrescentVel(speed, idx))
-        return "VER ARE COMING OUT THE CURVE"; 
+        return "COMING OUT THE CURVE"; 
     else if (*(throttle+idx) <= 98 && *(throttle+idx) > 95)  
-        return "VER IT''S ON A STRAIGHT LINE (SHORT)";
-    return "VER IT'S ON A STRAIGHT LINE (MEDIUM-LONG)";
+        return "ON A STRAIGHT LINE (SHORT)";
+    return "ON A STRAIGHT LINE (MEDIUM-LONG)";
 }
 
 void exportAndPrintAnalysisToCSV(double *speed, double *relDist, double *throttle, 
@@ -111,7 +115,11 @@ int main() {
     double speed[SIZE_CSV], relDist[SIZE_CSV], throttle[SIZE_CSV];
     int brake[SIZE_CSV];
 
-    readAndWriteDoubleArrays(speed, relDist, throttle, brake);
+    int choose = 0;
+    printf("Do you want to export VER or HAM curve analyses? (1/0)\n");
+    scanf("%d", &choose);
+
+    readAndWriteDoubleArrays(speed, relDist, throttle, brake, choose);
     exportAndPrintAnalysisToCSV(speed, relDist, throttle, brake);
 
     return 0;
