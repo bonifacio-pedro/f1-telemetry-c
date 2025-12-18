@@ -4,26 +4,46 @@
 ![Language](https://img.shields.io/badge/Language-C-blue)
 ![Python](https://img.shields.io/badge/Python-FastF1-green)
 
-## 📋 Overview
-
-Analysis of Formula 1 telemetry data using **C programming**, focused on identifying driver behavior patterns through speed, throttle, and brake data.
-
+📋 Overview
+Professional-grade F1 telemetry analysis tool that processes real race data to identify driver behavior patterns, compare performance between drivers, and detect racing states. Built with automotive software principles in mind.
 This project demonstrates:
-- Data extraction from F1 using Python (FastF1)
-- CSV parsing and processing in C
-- Real-time state detection algorithm
-- Automotive data analysis skills
 
-## 🎯 Features
+✅ Multi-driver telemetry comparison (VER vs HAM)
+✅ Speed delta analysis with interpolation
+✅ Real-time state detection algorithm
+✅ CSV parsing and processing in C
+✅ Data extraction from F1 API (FastF1)
+✅ Professional visualization and reporting
+✅ Automotive data analysis skills
 
-- **State Detection Algorithm** that identifies:
-  - 🏁 Straights (full throttle)
-  - 🔄 Corners (braking/low speed)
-  - 🚀 Corner exits (accelerating)
-  
-- **Lookahead Analysis**: Predicts acceleration by comparing speed N positions ahead
+## 🎯 Key Features
+1. Driver Comparison System
 
-- **CSV Export**: Generates analysis output for further visualization
+Compare telemetry between any two F1 drivers
+Speed, throttle, and brake analysis side-by-side
+Automatic best lap detection
+Visual overlap comparison
+
+2. Delta Analysis
+
+Speed delta calculation with scipy interpolation
+Percentage breakdown: who was faster where
+Sector-by-sector analysis (3 sectors)
+Top 5 advantage points for each driver
+
+3. State Detection Algorithm
+Identifies racing contexts in real-time:
+
+🏁 Straights: Full throttle sections (short/medium/long)
+🔄 Corners: Braking zones and low-speed sections
+🚀 Corner Exits: Acceleration zones with lookahead prediction
+
+4. Professional Output
+
+High-resolution plots (300 DPI)
+CSV exports for further analysis
+Console statistics and breakdown
+Analysis reports with insights
 
 ## 🛠️ Technologies
 
@@ -42,16 +62,27 @@ This project demonstrates:
    - Exports results
 ```
 
-## 🚀 Usage
-
-```bash
-gcc -o analyzer telemetry_analyzer.c -lm
-./analyzer
+## 📊 System Architecture
 ```
+┌─────────────────────────────────────────────────────────┐
+│                  F1 TELEMETRY ANALYSIS                  │
+└─────────────────────────────────────────────────────────┘
 
-### Step 3: View Results
-- Console: Real-time analysis output
-- `analysis_output.csv`: Full data for visualization
+    [F1 API] ──→ [FastF1 Python] ──→ [CSV Files]
+                                          │
+                                          ↓
+    [telemetry_VER_brazil_2024.csv] ←────┤
+    [telemetry_HAM_brazil_2024.csv] ←────┘
+                                          │
+                                          ↓
+    [C Analyzer] ──→ State Detection ──→ [analysis_output.csv]
+                 │                    
+                 └──→ Statistics ──→ [Console Output]
+                                          │
+                                          ↓
+    [Python Viz] ──→ [telemetry_comparison.png]
+                 └──→ [delta_speed.png]
+```
 
 ## 📈 Algorithm Logic
 ```c
