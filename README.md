@@ -5,7 +5,13 @@
 ![Python](https://img.shields.io/badge/Python-FastF1-green)
 
 📋 Overview
-Professional-grade F1 telemetry analysis tool that processes real race data to identify driver behavior patterns, compare performance between drivers, and detect racing states. Built with automotive software principles in mind.
+
+![Dashboard](dashboard.png)
+
+Professional-grade Formula 1 telemetry analysis platform that combines low-level C processing, Python data extraction, and an interactive Streamlit dashboard to analyze, compare, and visualize driver performance using real F1 race data.
+
+This project is designed with automotive embedded systems and motorsport engineering principles in mind, focusing on data pipelines, signal processing, telemetry interpretation, and performance analysis.
+
 This project demonstrates:
 
 ✅ Multi-driver telemetry comparison (VER vs HAM)
@@ -45,6 +51,28 @@ CSV exports for further analysis
 Console statistics and breakdown
 Analysis reports with insights
 
+## 📷 Dashboard Features
+
+Speed Comparison
+
+Overlaid speed traces along lap distance
+
+ΔSpeed Analysis
+
+Positive → Driver A faster
+
+Negative → Driver B faster
+
+Sector Breakdown
+
+Percentage dominance per sector
+
+Track Map Visualization
+
+Circuit plotted using X/Y telemetry
+
+Colored by which driver is faster in each section
+
 ## 🛠️ Technologies
 
 - **C**: Core processing and analysis
@@ -65,26 +93,44 @@ Analysis reports with insights
 ## 📊 System Architecture
 ```
 ┌─────────────────────────────────────────────────────────┐
-│                  F1 TELEMETRY ANALYSIS                  │
+│                  F1 TELEMETRY PLATFORM                  │
 └─────────────────────────────────────────────────────────┘
 
-    [F1 API] ──→ [FastF1 Python] ──→ [CSV Files]
-                                          │
-                                          ↓
-    [telemetry_VER_brazil_2024.csv] ←────┤
-    [telemetry_HAM_brazil_2024.csv] ←────┘
-                                          │
-                                          ↓
-    [C Analyzer] ──→ State Detection ──→ [analysis_output.csv]
-                 │                    
-                 └──→ Statistics ──→ [Console Output]
-                                          │
-                                          ↓
-    [Python Viz] ──→ [telemetry_comparison.png]
-                 └──→ [delta_speed.png]
+    [F1 API]
+        │
+        ▼
+[FastF1 - Python]
+        │
+        ├── telemetry_VER.csv
+        ├── telemetry_HAM.csv
+        │
+        ▼
+[C Telemetry Analyzer]
+        │
+        ├── State detection
+        ├── Signal classification
+        └── Statistics
+        │
+        ▼
+[Processed CSV Outputs]
+        │
+        ▼
+[Streamlit Dashboard]
+        ├── Speed & Delta plots
+        ├── Sector analysis
+        ├── Track map
+        └── Interactive comparison
 ```
 
-## 📈 Algorithm Logic
+## ▶️ How to Run
+1️⃣ Install dependencies
+```sh
+pip install -r requirements.txt
+
+streamlit run app.py
+```
+
+## 📈 C Algorithm Logic
 ```c
 IF (brake == 1 OR (throttle < 20 AND speed < 250))
     → CURVE
